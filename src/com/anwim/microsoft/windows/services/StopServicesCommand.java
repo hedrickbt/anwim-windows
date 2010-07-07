@@ -5,8 +5,9 @@ import java.util.Map;
 
 import com.anwim.microsoft.windows.CommandResponse;
 import com.anwim.microsoft.windows.RunCommand;
+import com.anwim.microsoft.windows.Command;
 
-public class StopServicesCommand extends ServiceCommand {
+public class StopServicesCommand extends Command {
 
 
 	public StopServicesCommand(RunCommand command) {
@@ -21,7 +22,7 @@ public class StopServicesCommand extends ServiceCommand {
 		try {
 			command.execute(args, response);
 			if (response.getStdErr().size() > 0) {
-				result.put(ServiceCommand.ERROR, response.getStdErr().toString());
+				result.put(Command.ERROR, response.getStdErr().toString());
 			} else {
 				if (response.stdOutContains(" FAILED ")) {
 					throw new Exception("Call for SC Failed:" + response.getStdOut());
@@ -34,15 +35,15 @@ public class StopServicesCommand extends ServiceCommand {
 						}
 					}
 
-					result.put(ServiceCommand.STD_OUT,response.getStdOut().toString());
+					result.put(Command.STD_OUT,response.getStdOut().toString());
 					if (success) {
 					} else {
-						result.put(ServiceCommand.ERROR, "Output does not indicate the service was stopped.  The word Stopped was not found.");
+						result.put(Command.ERROR, "Output does not indicate the service was stopped.  The word Stopped was not found.");
 					}
 				}
 			}
 		} catch (Exception e) {
-			result.put(ServiceCommand.ERROR, e.getMessage());
+			result.put(Command.ERROR, e.getMessage());
 		}
 
 		return result;

@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 
 import com.anwim.microsoft.windows.CommandResponse;
 import com.anwim.microsoft.windows.RunCommand;
-import com.anwim.microsoft.windows.services.ServiceCommand;
 import com.anwim.microsoft.windows.services.RestartServicesCommand;
 
 public class RestartServicesCommandTest extends TestCase {
@@ -28,7 +27,7 @@ public class RestartServicesCommandTest extends TestCase {
 		try {
 			Map<String, String> result = ssc.execute("osprey", "Apache2.2");
 			Assert.assertNull("Expecting not to find an error.", result
-					.get(ServiceCommand.ERROR));
+					.get(Command.ERROR));
 			// Set<String> temp = result.keySet();
 			// System.out.println(temp.size());
 			// Iterator<String> iter = temp.iterator();
@@ -49,7 +48,7 @@ public class RestartServicesCommandTest extends TestCase {
 		try {
 			Map<String, String> result = ssc.execute("osprey", "ZZTop");
 			Assert.assertNotNull("Expecting not to restart ZZTop service.", result
-					.containsKey(ServiceCommand.ERROR));
+					.containsKey(Command.ERROR));
 		} catch (Exception e) {
 			fail("This should not throw an exception: " + e.getMessage());
 		}
@@ -63,7 +62,7 @@ public class RestartServicesCommandTest extends TestCase {
 			Map<String, String> result = ssc.execute("ZZTop", "DoesNotMatter");
 			Assert.assertNotNull(
 					"Expecting not to restart DoesNotMatter service on ZZTop.", result
-							.containsKey(ServiceCommand.ERROR));
+							.containsKey(Command.ERROR));
 		} catch (Exception e) {
 			fail("This should not throw an exception: " + e.getMessage());
 		}

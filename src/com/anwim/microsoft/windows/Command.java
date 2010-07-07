@@ -1,15 +1,14 @@
-package com.anwim.microsoft.windows.services;
+package com.anwim.microsoft.windows;
 
-import com.anwim.microsoft.windows.RunCommand;
 
-public class ServiceCommand {
+public class Command {
 	public static final String ERROR = "Error:";
 	public static final String STD_OUT = "StdOut:";
 
 	
-	RunCommand command;
+	protected RunCommand command;
 
-	public ServiceCommand(RunCommand command) {
+	public Command(RunCommand command) {
 		this.command = command;
 	}
 	

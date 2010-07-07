@@ -5,8 +5,9 @@ import java.util.Map;
 
 import com.anwim.microsoft.windows.CommandResponse;
 import com.anwim.microsoft.windows.RunCommand;
+import com.anwim.microsoft.windows.Command;
 
-public class ListServicesCommand extends ServiceCommand {
+public class ListServicesCommand extends Command {
 
 	public ListServicesCommand(RunCommand command) {
 		super(command);
@@ -20,7 +21,7 @@ public class ListServicesCommand extends ServiceCommand {
 		try {
 			command.execute(args, response);
 			if (response.getStdErr().size() > 0) {
-				result.put(ServiceCommand.ERROR, response.getStdErr().toString());
+				result.put(Command.ERROR, response.getStdErr().toString());
 			} else {
 				if (response.stdOutContains(" FAILED ")) {
 					throw new Exception("Call for SC Failed:" + response.getStdOut());
@@ -50,7 +51,7 @@ public class ListServicesCommand extends ServiceCommand {
 				}
 			}
 		} catch (Exception e) {
-			result.put(ServiceCommand.ERROR, e.getMessage());
+			result.put(Command.ERROR, e.getMessage());
 		}
 
 		return result;

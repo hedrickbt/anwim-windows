@@ -79,7 +79,7 @@ public class RunCommandTest extends TestCase {
 		RunCommand cmd = new RunCommand();
 		CommandResponse response = new CommandResponse();
 		try {
-			String[] args = {"cmd.exe", "/c", "sc \\\\hedrickbt-r61 queryex Apache2.2"};
+			String[] args = {"cmd.exe", "/c", "sc \\\\osprey queryex Apache2.2"};
 			cmd.execute(args, response);
 		} catch (Exception e) {
 			fail("This should not throw an exception: " + e.getMessage());
@@ -91,7 +91,7 @@ public class RunCommandTest extends TestCase {
 //		RunCommand cmd = new RunCommand();
 //		CommandResponse response = new CommandResponse();
 //		try {
-//			String[] args = {"cmd.exe", "/c", "runas /user:user@domain.com \"sc \\\\hedrickbt-r61 queryex Apache2.2\""};
+//			String[] args = {"cmd.exe", "/c", "runas /user:user@domain.com \"sc \\\\osprey queryex Apache2.2\""};
 //			cmd.execute(args, response, "passwordhere\r\n");
 //			Assert.assertEquals("The word failed should not be found.",false, response.contains("FAILED"));
 //		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class RunCommandTest extends TestCase {
 		RunCommand cmd = new RunCommand();
 		CommandResponse response = new CommandResponse();
 		try {
-			String[] args = {"cmd.exe", "/c", "sc \\\\hedrickbt-r61 queryex \"Windows Search\""};
+			String[] args = {"cmd.exe", "/c", "sc \\\\osprey queryex \"Windows Search\""};
 			cmd.execute(args, response);
 			Assert.assertEquals("Did not find the value FAILED for an unknown service name.",true, response.contains("FAILED"));
 		} catch (Exception e) {

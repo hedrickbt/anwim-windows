@@ -1,15 +1,16 @@
 package com.anwim.microsoft.windows;
 
 import java.util.Map;
+import java.util.Iterator;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import com.anwim.microsoft.windows.CommandResponse;
 import com.anwim.microsoft.windows.RunCommand;
-import com.anwim.microsoft.windows.services.ListServicesCommand;
+import com.anwim.microsoft.windows.processes.ListProcessesCommand;
 
-public class ListServicesCommandTest extends TestCase {
+public class ListProcessesCommandTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -20,35 +21,42 @@ public class ListServicesCommandTest extends TestCase {
 		super.tearDown();
 	}
 
-	public void testExecuteForKnownGoodServiceApache() {
+	public void testExecuteForKnownGoodProcessExplorer() {
 		RunCommand cmd = new RunCommand();
 		CommandResponse response = new CommandResponse();
-		ListServicesCommand lsc = new ListServicesCommand(cmd);
+		ListProcessesCommand lsc = new ListProcessesCommand(cmd);
 		try {
 			Map<String, String> result = lsc.execute("osprey");
-			Assert.assertNotNull("Expecting to find Apache2.2 service.", result
-					.get("Apache2.2"));
-			// Set<String> temp = result.keySet();
-			// System.out.println(temp.size());
-			// Iterator<String> iter = temp.iterator();
-			// int i = 0;
-			// while (iter.hasNext()) {
-			// String item = (String)iter.next();
-			// System.out.println( item + "=" + result.get(item));
-			// }
+
+			boolean found = findMapValue(result, "explorer.exe");
+			Assert.assertTrue("Expecting to find explorer.exe process.", found);
+
 		} catch (Exception e) {
 			fail("This should not throw an exception: " + e.getMessage());
 		}
 	}
 
-	public void testExecuteForMissingServiceZZTop() {
+	private boolean findMapValue(Map<String, String> result, String searchValue) {
+		boolean found = false;
+		Iterator<Map.Entry<String,String>> iter = result.entrySet().iterator();
+		while ((iter.hasNext()) && (!found)) {
+		    Map.Entry<String,String> entry = iter.next();
+		    if (entry.getValue().equals(searchValue)) {
+		        //String key_you_look_for = entry.getKey();
+		    	found = true;
+		    }
+		}
+		return found;
+	}
+
+	public void testExecuteForMissingProcessZZTop() {
 		RunCommand cmd = new RunCommand();
 		CommandResponse response = new CommandResponse();
-		ListServicesCommand lsc = new ListServicesCommand(cmd);
+		ListProcessesCommand lsc = new ListProcessesCommand(cmd);
 		try {
 			Map<String, String> result = lsc.execute("osprey");
-			Assert.assertNull("Expecting not to find ZZTop service.", result
-					.get("ZZTop"));
+			boolean found = findMapValue(result, "zztop.exe");
+			Assert.assertFalse("Expecting not to find zztop.exe process.", found);
 		} catch (Exception e) {
 			fail("This should not throw an exception: " + e.getMessage());
 		}
@@ -57,12 +65,12 @@ public class ListServicesCommandTest extends TestCase {
 	public void testExecuteForInvalidServerName() {
 		RunCommand cmd = new RunCommand();
 		CommandResponse response = new CommandResponse();
-		ListServicesCommand lsc = new ListServicesCommand(cmd);
+		ListProcessesCommand lsc = new ListProcessesCommand(cmd);
 		try {
 			Map<String, String> result = lsc.execute("ZZTop");
-			Assert.assertNull(
-					"Expecting not to find Apache2.2 service on ZZTop.", result
-							.get("Apache2.2"));
+			boolean found = findMapValue(result, "explorer.exe");
+			Assert.assertFalse(
+					"Expecting not to find explorer.exe process on ZZTop.", found);
 			Assert.assertTrue("Expecting to find an error", result
 					.containsKey(Command.ERROR));
 		} catch (Exception e) {
