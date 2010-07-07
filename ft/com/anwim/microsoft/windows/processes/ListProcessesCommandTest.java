@@ -1,4 +1,4 @@
-package com.anwim.microsoft.windows;
+package com.anwim.microsoft.windows.processes;
 
 import java.util.Map;
 import java.util.Iterator;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import com.anwim.microsoft.windows.Command;
 import com.anwim.microsoft.windows.CommandResponse;
 import com.anwim.microsoft.windows.RunCommand;
 import com.anwim.microsoft.windows.processes.ListProcessesCommand;
