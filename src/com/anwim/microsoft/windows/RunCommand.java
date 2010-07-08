@@ -124,7 +124,7 @@ public class RunCommand {
 				while (((line = br.readLine()) != null) && (!stopped)) {
 				//while ((line = br.readLine()) != null) {
 					output.add(line);
-					os.println(line);  // debugging only
+					//os.println(line);  // debugging only
 				}
 				//finished = true;
 			} catch (Exception e) {
